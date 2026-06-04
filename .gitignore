@@ -11,6 +11,7 @@ trips/
 *.pdf
 Screenshot*.png
 seats-aero-chats/
+CLAUDE.local.md
 
 # Dependencies
 node_modules/

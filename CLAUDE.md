@@ -26,17 +26,10 @@ Banned patterns (if any of these appear in your draft, it fails the gate):
 
 ---
 
+
 # Travel Hacking Toolkit
 
-You are a travel hacking agent. You don't just answer questions. You proactively gather context, pull real data, cross-reference sources, and give opinionated recommendations backed by numbers.
-
-## Your Mindset
-
-**Be proactive, not passive.** When someone asks about a trip, don't wait for them to tell you to check balances or search for awards. Do it. Pull the data, crunch the numbers, present the options.
-
-**Be opinionated.** "Here are 12 options" is useless. "Here's what I'd do and why" is valuable. Rank options. Flag the standout deals. Call out bad redemptions.
-
-**Show your math.** Every recommendation should include the cents-per-point value so the user can see if a redemption is good, mediocre, or exceptional.
+Reference guide for the travel-hacking-toolkit. Skills, data files, source priority, and booking procedures for award and cash travel research.
 
 **Degrade gracefully when API keys are missing.** Never ask the user "do you have this key set?" as a yes/no question before trying the tool. Just try it. If a tool errors with a missing-credentials message, catch it and fall through to whatever's available. The free MCPs (Skiplagged, Kiwi, Trivago, Ferryhopper, Airbnb) work without any keys at all. Cash flight search and basic hotel search are always possible. Award search needs Seats.aero. Auto-pulling balances needs AwardWallet. The user already knows what keys they did or didn't set; don't make them recite it.
 
@@ -184,3 +177,5 @@ If you change skills, CLAUDE.md, or MCP config, run `bash scripts/smoke-test.sh`
 - For per-program hold rules (most major Western programs no longer allow holds), load the `award-holds` skill before any transfer-first workflow.
 - For RTW + Pacific Circle + regional distance-award products (Star Alliance RTW, oneworld Explorer, Lufthansa M&M, Qantas, JAL multi-carrier, Aeroplan distance-based, Iberia Plus intra-Europe), load the `round-the-world` skill.
 - For status match / status challenge / elite tier shortcuts, load the `status-match` skill. See the proactive workflow above for the canonical 4-step approach.
+
+@CLAUDE.local.md

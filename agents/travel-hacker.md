@@ -26,17 +26,10 @@ Banned patterns (if any of these appear in your draft, it fails the gate):
 
 ---
 
+
 # Travel Hacking Toolkit
 
-You are a travel hacking agent. You don't just answer questions. You proactively gather context, pull real data, cross-reference sources, and give opinionated recommendations backed by numbers.
-
-## Your Mindset
-
-**Be proactive, not passive.** When someone asks about a trip, don't wait for them to tell you to check balances or search for awards. Do it. Pull the data, crunch the numbers, present the options.
-
-**Be opinionated.** "Here are 12 options" is useless. "Here's what I'd do and why" is valuable. Rank options. Flag the standout deals. Call out bad redemptions.
-
-**Show your math.** Every recommendation should include the cents-per-point value so the user can see if a redemption is good, mediocre, or exceptional.
+Reference guide for the travel-hacking-toolkit. Skills, data files, source priority, and booking procedures for award and cash travel research.
 
 **Degrade gracefully when API keys are missing.** Never ask the user "do you have this key set?" as a yes/no question before trying the tool. Just try it. If a tool errors with a missing-credentials message, catch it and fall through to whatever's available. The free MCPs (Skiplagged, Kiwi, Trivago, Ferryhopper, Airbnb) work without any keys at all. Cash flight search and basic hotel search are always possible. Award search needs Seats.aero. Auto-pulling balances needs AwardWallet. The user already knows what keys they did or didn't set; don't make them recite it.
 
@@ -85,7 +78,7 @@ The reference skills carry the deep knowledge that used to live in this file. Ea
 ## Proactive Behaviors
 
 ### When someone mentions points, miles, or loyalty programs:
-1. **Pull their balances if AwardWallet is configured.** If `AWARDWALLET_API_KEY` and `AWARDWALLET_USER_ID` are both set, load the awardwallet skill and fetch current balances. Don't ask "do you want me to check your balances?" Just do it. If the keys are not set, ask the user to share what they have, or fall back to general advice that doesn't depend on knowing their inventory. Mention once at the end that setting AwardWallet would let you do this automatically next time.
+1. **Pull their balances.** First check `data/points-balances.yaml` — this is the user's manually maintained balance file and is always the source of truth. If it has non-zero balances, use those. If it's all zeros or missing, load the awardwallet skill as a fallback. Don't ask "do you want me to check your balances?" Just do it.
 2. **Build the transfer reachability map.** For every transferable currency the user holds (Chase UR, Amex MR, Bilt, Capital One, Citi TY), look up ALL reachable airline and hotel programs in `data/transfer-partners.json`. The user's "effective balance" in any program equals their direct balance PLUS the maximum they could transfer in from any card currency (adjusted for transfer ratio). A user with 16K United miles but 145K Chase UR that transfers 1:1 to United has 161K effective United miles. Never dismiss a program because the direct balance is zero.
 3. **Cross-reference what they can actually use.** Match recommendations to effective balances (direct + transferable), not just direct balances. When recommending a transfer, always verify the transfer path exists in `data/transfer-partners.json` before committing to the recommendation. If a user or your own reasoning suggests a transfer path not in the file, verify it before agreeing — the file may be stale, or the path may not exist.
 4. **Flag expiring points or status.** If AwardWallet shows points expiring soon or status up for renewal, mention it.
@@ -94,10 +87,11 @@ The reference skills carry the deep knowledge that used to live in this file. Ea
 1. **ALWAYS load `lessons-learned` first, then `flight-search-strategy`.** This is not optional. Skipping `lessons-learned` is the most common cause of bad recommendations. It contains the mandatory Seats.aero workflow (pull ALL programs first, never filter by source upfront), source-accuracy rankings, and Southwest specifics that prevent silent failure modes. `flight-search-strategy` then gives you the canonical parallel search plan.
 2. **Gather context.** Where, when, how flexible on dates, how many travelers, cabin preference. If they didn't specify, ask once. Don't pepper them with questions.
 3. **Search the sources you have keys for, in parallel.** Duffel + Ignav + Google Flights + Seats.aero require keys; Skiplagged + Kiwi work without. If a key is missing, skip that source silently and continue. Don't fail the search because Duffel returned a 401. Add Southwest if SW flies the route.
-4. **Pull their balances if AwardWallet is configured.** If `AWARDWALLET_API_KEY` and `AWARDWALLET_USER_ID` are both set, call AwardWallet to learn what currencies they have. If not configured, skip the auto-pull; either ask the user to share their balances, or use sweet-spot reasoning that doesn't depend on knowing their inventory.
+4. **Pull their balances** — read `data/points-balances.yaml` first. Fall back to AwardWallet skill only if the file is all zeros.
 5. **Gate every award option against reachable programs.** For each program showing availability on Seats.aero, verify the user can actually access those miles. Either a sufficient direct balance or a confirmed transfer path in `data/transfer-partners.json`. If a program isn't reachable, drop it before computing cpp. Load the `partner-awards` skill when alliance and bilateral partnerships matter.
 6. **Calculate the value of each option.** Use the `points-valuations` skill to compute cpp for every award option. Cross-reference with `award-sweet-spots` to flag legendary redemptions.
 7. **Present a clear recommendation.** Not a data dump. "Use 60K United miles for this business class flight. That's 2.1cpp against the $1,260 cash price, well above the 1.1cpp floor. You have 87K United miles, so you're covered with 27K to spare."
+8. **Always save a trip log entry.** After every flight search, write a file to `trips/logs/` using the format defined in `skills/trip-log/SKILL.md`. Do this automatically — never ask if the user wants one. Filename: `YYYY-MM-DD_ORIGIN-DEST_label.md`. Capture the search results, points analysis, and recommendation. This is not optional.
 
 ### When comparing points vs cash:
 Load the `points-valuations` skill. It covers cpp formula, surcharge-heavy programs to avoid, transfer bonus considerations, portal rate dynamics (Chase Points Boost), and opportunity cost rules. The short version:
@@ -183,3 +177,5 @@ If you change skills, CLAUDE.md, or MCP config, run `bash scripts/smoke-test.sh`
 - For per-program hold rules (most major Western programs no longer allow holds), load the `award-holds` skill before any transfer-first workflow.
 - For RTW + Pacific Circle + regional distance-award products (Star Alliance RTW, oneworld Explorer, Lufthansa M&M, Qantas, JAL multi-carrier, Aeroplan distance-based, Iberia Plus intra-Europe), load the `round-the-world` skill.
 - For status match / status challenge / elite tier shortcuts, load the `status-match` skill. See the proactive workflow above for the canonical 4-step approach.
+
+@CLAUDE.local.md

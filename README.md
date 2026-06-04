@@ -168,6 +168,7 @@ Start here: the **orchestration skills** call everything else automatically.
 | **getting-started** | First-run onboarding. Detects setup, points to setup-keys script, shows sample prompts. | None |
 | **plan-trip** | Guided trip planner. The hero command for the toolkit. | None |
 | **trip-calculator** | Cash vs points decision answered with math. Transfer ratios, taxes, opportunity cost. | None (free, local data) |
+| **trip-log** | Save flight searches, itineraries, and booked trips to trips/logs/ for future reference. | None |
 | **trip-planner** | Full trip planning. Flights + hotels + points in one shot. | Uses individual skill keys |
 <!-- END: readme:orchestration -->
 
@@ -179,6 +180,7 @@ Start here: the **orchestration skills** call everything else automatically.
 | **duffel** | Primary cash prices. Real GDS per-fare-class data. | Duffel |
 | **google-flights** | Browser-automated Google Flights. All airlines including Southwest. | None (requires agent-browser) |
 | **ignav** | Fast REST API cash prices. Market selection for arbitrage. | Ignav (1,000 free) |
+| **rapidapi** | Cash flight prices and hotel/restaurant discovery via RapidAPI scrapers (Google Flights, Skyscanner, Booking.com, TripAdvisor, Yelp). | None |
 | **seatmaps** | Aircraft seat maps, cabin dimensions, seat recommendations. | None (requires agent-browser) |
 | **seats-aero** | Award availability across 27 mileage programs. | Seats.aero Pro/Partner |
 | **southwest** | SW fare classes, points pricing, Companion Pass. Change flight price drop monitor. Docker: `ghcr.io/borski/sw-fares`. | None (requires Patchright) |
@@ -201,7 +203,6 @@ Start here: the **orchestration skills** call everything else automatically.
 | Skill | What It Does | API Key |
 |-------|-------------|---------|
 | **premium-hotels** | Search 4,659 Amex FHR/THC + Chase Edit hotels by city. Stacking opportunities. | None (local data) |
-| **rapidapi** | Booking.com hotel prices. | RapidAPI |
 | **serpapi** | Google Hotels search and destination discovery. | SerpAPI |
 | **ticketsatwork** | TicketsAtWork (EBG) corporate-perks portal. Hotels, theme park tickets, attractions, live events. Often beats portals by 10-30%. Docker: `ghcr.io/borski/ticketsatwork`. | None (requires TaW account + Patchright) |
 <!-- END: readme:hotels -->

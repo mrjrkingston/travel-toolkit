@@ -21,6 +21,7 @@ Skill listings below are auto-generated from `skills/*/SKILL.md` frontmatter by 
 - [Getting Started](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/getting-started/SKILL.md): First-run onboarding. Detects setup, points to setup-keys script, shows sample prompts.
 - [Plan Trip](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/plan-trip/SKILL.md): Guided trip planner. The hero command for the toolkit.
 - [Trip Calculator](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/trip-calculator/SKILL.md): Cash vs points decision answered with math. Transfer ratios, taxes, opportunity cost.
+- [Trip Log](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/trip-log/SKILL.md): Save flight searches, itineraries, and booked trips to trips/logs/ for future reference.
 - [Trip Planner](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/trip-planner/SKILL.md): Full trip planning. Flights + hotels + points in one shot.
 <!-- END: llms:orchestration -->
 
@@ -30,6 +31,7 @@ Skill listings below are auto-generated from `skills/*/SKILL.md` frontmatter by 
 - [Duffel](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/duffel/SKILL.md): Primary cash prices. Real GDS per-fare-class data.
 - [Google Flights](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/google-flights/SKILL.md): Browser-automated Google Flights. All airlines including Southwest.
 - [Ignav](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/ignav/SKILL.md): Fast REST API cash prices. Market selection for arbitrage.
+- [Rapidapi](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/rapidapi/SKILL.md): Cash flight prices and hotel/restaurant discovery via RapidAPI scrapers (Google Flights, Skyscanner, Booking.com, TripAdvisor, Yelp).
 - [Seatmaps](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/seatmaps/SKILL.md): Aircraft seat maps, cabin dimensions, seat recommendations.
 - [Seats Aero](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/seats-aero/SKILL.md): Award availability across 27 mileage programs.
 - [Southwest](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/southwest/SKILL.md): SW fare classes, points pricing, Companion Pass. Change flight price drop monitor. Docker: `ghcr.io/borski/sw-fares`.
@@ -48,7 +50,6 @@ Skill listings below are auto-generated from `skills/*/SKILL.md` frontmatter by 
 
 <!-- BEGIN: llms:hotels -->
 - [Premium Hotels](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/premium-hotels/SKILL.md): Search 4,659 Amex FHR/THC + Chase Edit hotels by city. Stacking opportunities.
-- [Rapidapi](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/rapidapi/SKILL.md): Booking.com hotel prices.
 - [Serpapi](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/serpapi/SKILL.md): Google Hotels search and destination discovery.
 - [Ticketsatwork](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/ticketsatwork/SKILL.md): TicketsAtWork (EBG) corporate-perks portal. Hotels, theme park tickets, attractions, live events. Often beats portals by 10-30%. Docker: `ghcr.io/borski/ticketsatwork`.
 <!-- END: llms:hotels -->

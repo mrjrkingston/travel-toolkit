@@ -47,6 +47,23 @@ ok()   { echo "  [ok] $*"; PASS=$((PASS+1)); }
 fail() { echo "  [X] $*";  FAIL=$((FAIL+1)); }
 skip() { echo "  [-] $*"; }
 
+# Fallback timeout function for macOS (where GNU timeout is not available)
+if ! command -v timeout >/dev/null 2>&1; then
+  timeout() {
+    local duration=$1
+    shift
+    # Run the command in background and wait with timeout
+    "$@" &
+    local pid=$!
+    ( sleep "$duration" && kill -9 $pid 2>/dev/null ) &
+    local sleep_pid=$!
+    wait $pid 2>/dev/null
+    local rc=$?
+    kill -9 $sleep_pid 2>/dev/null
+    return $rc
+  }
+fi
+
 # --- Static checks ---
 
 if [ "$AGENTS_ONLY" -eq 0 ]; then

@@ -9,7 +9,14 @@
 data/points-balances.yaml
 trips/
 *.pdf
-Screenshot*.png
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.heic
+*.bmp
+*.tiff
 seats-aero-chats/
 CLAUDE.local.md
 docs/superpowers/

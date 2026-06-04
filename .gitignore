@@ -4,6 +4,14 @@
 .env.bak
 .claude/settings.local.json
 
+# Personal / local-only files (not contributed upstream)
+.claude/settings.json
+data/points-balances.yaml
+trips/
+*.pdf
+Screenshot*.png
+seats-aero-chats/
+
 # Dependencies
 node_modules/
 

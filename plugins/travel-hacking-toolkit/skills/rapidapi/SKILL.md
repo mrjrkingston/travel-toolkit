@@ -1,6 +1,6 @@
 ---
 name: rapidapi
-description: Search flights (Google Flights, Skyscanner, Booking.com), hotels (Booking.com, TripAdvisor), restaurants (Yelp, OpenTable), destinations (travel guide, atlas), and social/local (Instagram, Foursquare) via RapidAPI scrapers. Use for cash flight prices, hotel pricing, restaurant discovery, and destination research. Triggers on "RapidAPI", "Skyscanner", "Booking.com flights", "Yelp", "OpenTable", "TripAdvisor", "Instagram", "travel guide", or when SerpAPI flight results need a second opinion.
+description: Search flights (Google Flights, Skyscanner, Booking.com), hotels (Booking.com, TripAdvisor, tripad-mate), short-term rentals (Airbnb homes), restaurants (Yelp, OpenTable), tours/activities (Viator), maps (Google Maps), destinations (travel guide, atlas), and social/local (Instagram, Foursquare) via RapidAPI scrapers. Use for cash flight prices, hotel pricing, restaurant discovery, tour search, and destination research. Triggers on "RapidAPI", "Skyscanner", "Booking.com flights", "Yelp", "OpenTable", "TripAdvisor", "Instagram", "Airbnb", "Viator", "tours", "activities", "travel guide", or when SerpAPI flight results need a second opinion.
 license: MIT
 ---
 
@@ -15,14 +15,22 @@ license: MIT
 | `google-flights2.p.rapidapi.com` | Flights | ✅ | Cleanest params. Airline name occasionally null (cosmetic). |
 | `booking-com15.p.rapidapi.com` | Hotels | ✅ | Requires destination lookup first to get `dest_id`. |
 | `travel-advisor.p.rapidapi.com` | Hotels/Restaurants | ✅ | TripAdvisor scraper. Requires location lookup for `location_id`. |
+| `tripad-mate.p.rapidapi.com` | Hotels/Restaurants | ✅ | TripAdvisor scraper. `/hotels/search` + `/restaurants/search`. Query by city name directly. |
 | `opentable-data-api.p.rapidapi.com` | Restaurants | ✅ | Works internationally via lat/long. 200 req/mo. |
 | `yelp-business-api.p.rapidapi.com` | Restaurants | ✅ | Response key is `.business_search_result[]` (not `.results[]`). |
 | `yelp-business-reviews.p.rapidapi.com` | Restaurants | ✅ | Returns `bizId` for review detail lookups. |
+| `homes-experiences-services-data.p.rapidapi.com` | Short-term Rentals | ✅ | Airbnb listings. Requires Google Place ID (not city name). `/homes/search?placeId=PLACE_ID`. |
 | `travel-guide-api-city-guide-top-places.p.rapidapi.com` | Discovery | ✅ | POST endpoint. AI city guide with top places + coordinates. |
 | `instagram-looter2.p.rapidapi.com` | Discovery | ✅ | tag-feeds path: `.data.hashtag.edge_hashtag_to_media.edges[]`. |
+| `google-map-scraper11.p.rapidapi.com` | Maps | ⚠️ | `/places` endpoint exists but requires `GOOGLE_MAPS_API_KEY` as additional param — not yet in `.env`. |
+| `viator-api.p.rapidapi.com` | Tours/Activities | ❓ | Subscribed. Endpoint paths unknown — check RapidAPI docs Endpoints tab. |
+| `booking119.p.rapidapi.com` | Hotels | ❓ | Subscribed. Endpoint paths unknown — check RapidAPI docs Endpoints tab. |
+| `airbnb-data-api2.p.rapidapi.com` | Short-term Rentals | ❓ | Subscribed. Endpoint paths unknown — check RapidAPI docs Endpoints tab. |
+| `map-api7.p.rapidapi.com` | Maps | ❓ | Subscribed. Endpoint paths unknown — check RapidAPI docs Endpoints tab. |
 | `Foursquareserg-osipchukV1.p.rapidapi.com` | Discovery | ⚠️ | Subscribed but needs Foursquare `clientId`+`clientSecret` — not in `.env`. |
 
-To add a new subscription, update this table and add a section below with working curl examples.
+To add a new subscription: update this table, add a section below with working curl examples, and run a live test.
+For ❓ entries: go to rapidapi.com → subscriptions → click the API → Endpoints tab to find paths, then test and update status here.
 
 ## Authentication
 
@@ -361,9 +369,63 @@ curl -s "https://instagram-looter2.p.rapidapi.com/tag-feeds?query=tokyo&count=12
 
 ---
 
+## New APIs (tested 2026-06-04)
+
+### 11. Tripad-Mate (`tripad-mate.p.rapidapi.com`)
+TripAdvisor scraper — simpler than `travel-advisor` as no location lookup step needed, just pass city name directly.
+
+#### Hotel Search
+```bash
+curl -s "https://tripad-mate.p.rapidapi.com/hotels/search?query=Mexico+City&checkIn=2026-07-15&checkOut=2026-07-22&adults=2" \
+  -H "x-rapidapi-key: $RAPIDAPI_KEY" -H "x-rapidapi-host: tripad-mate.p.rapidapi.com" \
+  | jq '{total: .totalResultCount, hotels: [.data.hotels[0:5][] | {name: .cardTitle.string, rating: .bubbleRating.rating, reviews: .bubbleRating.numberReviews.string}]}'
+```
+
+#### Restaurant Search
+```bash
+curl -s "https://tripad-mate.p.rapidapi.com/restaurants/search?query=Mexico+City" \
+  -H "x-rapidapi-key: $RAPIDAPI_KEY" -H "x-rapidapi-host: tripad-mate.p.rapidapi.com" \
+  | jq '{total: .totalResultCount, restaurants: [.data.restaurants[0:5][] | {name: .cardTitle.string, rating: .bubbleRating.rating}]}'
+```
+
+**Response paths:** hotels at `.data.hotels[]`, restaurants at `.data.restaurants[]`. Both have `cardTitle.string` for name and `bubbleRating.rating` for score.
+
+---
+
+### 12. Homes/Experiences/Services Data (`homes-experiences-services-data.p.rapidapi.com`)
+Airbnb listings scraper. Requires a Google Place ID — NOT a city name string.
+
+#### Get Google Place ID First
+Use `booking-com15` destination lookup, or google the place ID: search "Google Place ID [city]" and use the Maps embed to extract it.
+Mexico City Place ID: `ChIJB3UJ2yYAzoURQeQMKgW4H9E`
+
+#### Search Homes
+```bash
+curl -s "https://homes-experiences-services-data.p.rapidapi.com/homes/search?placeId=ChIJB3UJ2yYAzoURQeQMKgW4H9E" \
+  -H "x-rapidapi-key: $RAPIDAPI_KEY" -H "x-rapidapi-host: homes-experiences-services-data.p.rapidapi.com" \
+  | jq '{total: .totalResultCount, listings: [.data.searchResults[0:5][] | {name: .listing.name, type: .listing.roomType, price: .pricingQuote.structuredStayDisplayPrice.primaryLine.price}]}'
+```
+
+**Response path:** `.data.searchResults[]` → `.listing.name`, `.listing.roomType`, `.pricingQuote.structuredStayDisplayPrice.primaryLine.price`
+
+---
+
+## Subscribed But Endpoint Unknown
+
+The following APIs are subscribed and the key authenticates, but endpoint paths could not be discovered by brute-force probing (50+ patterns tried each). Check the RapidAPI documentation Endpoints tab for each to find the correct paths, then test and add curl examples here.
+
+- **`viator-api.p.rapidapi.com`** — Tours & activities (Viator scraper)
+- **`booking119.p.rapidapi.com`** — Booking.com variant
+- **`airbnb-data-api2.p.rapidapi.com`** — Airbnb listings variant
+- **`map-api7.p.rapidapi.com`** — Map/places API
+
+**`google-map-scraper11.p.rapidapi.com`** — `/places` endpoint confirmed to exist but returns 401 "Invalid apiKey". Requires a `GOOGLE_MAPS_API_KEY` parameter in addition to `RAPIDAPI_KEY`. Add `GOOGLE_MAPS_API_KEY` to `.env` to enable.
+
+---
+
 ## Requires Additional Credentials
 
-### 11. Foursquare (`Foursquareserg-osipchukV1.p.rapidapi.com`)
+### Foursquare (`Foursquareserg-osipchukV1.p.rapidapi.com`)
 **Status: Subscribed but requires Foursquare app credentials (`clientId` + `clientSecret`) not in `.env`.** Skip unless user has Foursquare developer credentials.
 
 If credentials are available, venue search uses POST:
@@ -390,5 +452,7 @@ curl -s -X POST "https://foursquareserg-osipchukv1.p.rapidapi.com/searchVenues" 
 | `yelp-business-reviews` | check | Yelp reviews |
 | `travel-guide` | check | AI city guides |
 | `instagram-looter2` | check | Destination inspiration, travel accounts |
+| `tripad-mate` | check | TripAdvisor hotels/restaurants, no location lookup needed |
+| `homes-experiences-services-data` | check | Airbnb listings via Google Place ID |
 
-Use flights-sky and google-flights2 as primary flight sources. Prefer opentable over yelp for reservation availability. Use travel-advisor for TripAdvisor content.
+Use flights-sky and google-flights2 as primary flight sources. Prefer opentable over yelp for reservation availability. Use tripad-mate for TripAdvisor content (simpler than travel-advisor — no location ID lookup step). Use homes-experiences-services-data for Airbnb listings.

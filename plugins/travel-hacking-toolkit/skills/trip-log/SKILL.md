@@ -1,5 +1,7 @@
 ---
 name: trip-log
+category: orchestration
+summary: Save flight searches, itineraries, and booked trips to trips/logs/ for future reference.
 description: Save flight searches, itineraries, and booked trips to the trips/logs/ directory for future reference. Use after any flight search to create a persistent record. Also use to update status when a trip is booked or completed, or to look up past searches.
 ---
 

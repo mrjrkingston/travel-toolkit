@@ -1,5 +1,7 @@
 ---
 name: rapidapi
+category: flights
+summary: Cash flight prices and hotel/restaurant discovery via RapidAPI scrapers (Google Flights, Skyscanner, Booking.com, TripAdvisor, Yelp).
 description: Search flights (Google Flights, Skyscanner, Booking.com), hotels (Booking.com, TripAdvisor, tripad-mate), short-term rentals (Airbnb homes), restaurants (Yelp, OpenTable), tours/activities (Viator), maps (Google Maps), destinations (travel guide, atlas), and social/local (Instagram, Foursquare) via RapidAPI scrapers. Use for cash flight prices, hotel pricing, restaurant discovery, tour search, and destination research. Triggers on "RapidAPI", "Skyscanner", "Booking.com flights", "Yelp", "OpenTable", "TripAdvisor", "Instagram", "Airbnb", "Viator", "tours", "activities", "travel guide", or when SerpAPI flight results need a second opinion.
 license: MIT
 ---

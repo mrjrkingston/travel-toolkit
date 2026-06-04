@@ -6,7 +6,23 @@ license: MIT
 
 # RapidAPI Skill
 
-10 confirmed-working subscribed APIs (all tested with `$RAPIDAPI_KEY`). One additional API (Foursquare) requires external credentials.
+## Subscribed APIs (last tested 2026-06-04)
+
+| Host | Category | Status | Notes |
+|------|----------|--------|-------|
+| `flights-sky.p.rapidapi.com` | Flights | ✅ | Google Flights, Skyscanner, Booking.com. 50 req/mo. |
+| `sky-scrapper.p.rapidapi.com` | Flights | ✅ | Use `searchFlights` (not `searchFlightsComplete`). Search by city name, not IATA code. |
+| `google-flights2.p.rapidapi.com` | Flights | ✅ | Cleanest params. Airline name occasionally null (cosmetic). |
+| `booking-com15.p.rapidapi.com` | Hotels | ✅ | Requires destination lookup first to get `dest_id`. |
+| `travel-advisor.p.rapidapi.com` | Hotels/Restaurants | ✅ | TripAdvisor scraper. Requires location lookup for `location_id`. |
+| `opentable-data-api.p.rapidapi.com` | Restaurants | ✅ | Works internationally via lat/long. 200 req/mo. |
+| `yelp-business-api.p.rapidapi.com` | Restaurants | ✅ | Response key is `.business_search_result[]` (not `.results[]`). |
+| `yelp-business-reviews.p.rapidapi.com` | Restaurants | ✅ | Returns `bizId` for review detail lookups. |
+| `travel-guide-api-city-guide-top-places.p.rapidapi.com` | Discovery | ✅ | POST endpoint. AI city guide with top places + coordinates. |
+| `instagram-looter2.p.rapidapi.com` | Discovery | ✅ | tag-feeds path: `.data.hashtag.edge_hashtag_to_media.edges[]`. |
+| `Foursquareserg-osipchukV1.p.rapidapi.com` | Discovery | ⚠️ | Subscribed but needs Foursquare `clientId`+`clientSecret` — not in `.env`. |
+
+To add a new subscription, update this table and add a section below with working curl examples.
 
 ## Authentication
 

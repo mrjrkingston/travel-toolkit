@@ -1,16 +1,16 @@
 ---
 name: trip-log
-description: Save flight searches, itineraries, and booked trips to the trips/ directory for future reference. Use after any flight search to create a persistent record. Also use to update status when a trip is booked or completed, or to look up past searches.
+description: Save flight searches, itineraries, and booked trips to the trips/logs/ directory for future reference. Use after any flight search to create a persistent record. Also use to update status when a trip is booked or completed, or to look up past searches.
 ---
 
 # Trip Log Skill
 
-Save and retrieve flight searches, award analyses, and booked itineraries from `trips/`. Every flight search should produce a trip log entry. Past entries are a reference library — pull them when planning connected trips, checking what was already searched, or reviewing what was booked and why.
+Save and retrieve flight searches, award analyses, and booked itineraries from `trips/logs/`. Every flight search should produce a trip log entry. Past entries are a reference library — pull them when planning connected trips, checking what was already searched, or reviewing what was booked and why.
 
 ## File Naming
 
 ```
-trips/YYYY-MM-DD_ORIGIN-DEST_short-label.md
+trips/logs/YYYY-MM-DD_ORIGIN-DEST_short-label.md
 ```
 
 - `YYYY-MM-DD` — date the search was run
@@ -19,9 +19,9 @@ trips/YYYY-MM-DD_ORIGIN-DEST_short-label.md
 
 Examples:
 ```
-trips/2026-05-05_DUB-SAN-LAX-SFO-DTW_tomorrowland-return.md
-trips/2026-07-01_SAN-NRT_japan-ana-first.md
-trips/2026-08-06_DUB-LAX_tomorrowland-return-booked.md
+trips/logs/2026-05-05_DUB-SAN-LAX-SFO-DTW_tomorrowland-return.md
+trips/logs/2026-07-01_SAN-NRT_japan-ana-first.md
+trips/logs/2026-08-06_DUB-LAX_tomorrowland-return-booked.md
 ```
 
 ## Document Structure
@@ -126,16 +126,16 @@ To surface relevant history, grep the trips/ directory:
 
 ```bash
 # Find all researched (unbooked) trips
-grep -l "status: researched" trips/*.md
+grep -l "status: researched" trips/logs/*.md
 
 # Find all trips from a specific origin
-grep -l "origin: DUB" trips/*.md
+grep -l "origin: DUB" trips/logs/*.md
 
 # Find trips tagged with a keyword
-grep -rl "tomorrowland" trips/
+grep -rl "tomorrowland" trips/logs/
 
 # List all trips with their status
-grep -h "^status:" trips/*.md
+grep -h "^status:" trips/logs/*.md
 ```
 
 ## When to Create an Entry
@@ -146,6 +146,6 @@ grep -h "^status:" trips/*.md
 
 ## Notes
 
-- Files live in `trips/` which is gitignored — local only, never pushed upstream.
+- Files live in `trips/logs/` which is gitignored — local only, never pushed upstream.
 - `data/points-balances.yaml` is the live balance file. Trip logs capture a snapshot of balances at search time in the frontmatter.
 - Do not store `.env` values or account numbers in trip logs.

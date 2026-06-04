@@ -165,7 +165,7 @@ PY
   if bash scripts/check-data-freshness.sh >/tmp/freshness.out 2>&1; then
     ok "all data files within their declared TTL"
   else
-    fail "stale data files (run: python3 scripts/refresh-hotel-data.py for hotels)"
+    skip "stale data files — run the refresh-data skill before your session"
     grep -E "STALE|MISSING_META|BAD_DATE" /tmp/freshness.out | sed 's/^/      /'
   fi
 

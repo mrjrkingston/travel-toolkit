@@ -180,7 +180,7 @@ Start here: the **orchestration skills** call everything else automatically.
 | **duffel** | Primary cash prices. Real GDS per-fare-class data. | Duffel |
 | **google-flights** | Browser-automated Google Flights. All airlines including Southwest. | None (requires agent-browser) |
 | **ignav** | Fast REST API cash prices. Market selection for arbitrage. | Ignav (1,000 free) |
-| **rapidapi** | Cash flight prices and hotel/restaurant discovery via RapidAPI scrapers (Google Flights, Skyscanner, Booking.com, TripAdvisor, Yelp). | None |
+| **rapidapi** | Cash flight prices, hotel/restaurant discovery, Airbnb stays + experiences, routing/geocoding, and destination guides via RapidAPI scrapers. | None |
 | **seatmaps** | Aircraft seat maps, cabin dimensions, seat recommendations. | None (requires agent-browser) |
 | **seats-aero** | Award availability across 27 mileage programs. | Seats.aero Pro/Partner |
 | **southwest** | SW fare classes, points pricing, Companion Pass. Change flight price drop monitor. Docker: `ghcr.io/borski/sw-fares`. | None (requires Patchright) |

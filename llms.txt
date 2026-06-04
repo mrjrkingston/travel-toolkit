@@ -31,7 +31,7 @@ Skill listings below are auto-generated from `skills/*/SKILL.md` frontmatter by 
 - [Duffel](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/duffel/SKILL.md): Primary cash prices. Real GDS per-fare-class data.
 - [Google Flights](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/google-flights/SKILL.md): Browser-automated Google Flights. All airlines including Southwest.
 - [Ignav](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/ignav/SKILL.md): Fast REST API cash prices. Market selection for arbitrage.
-- [Rapidapi](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/rapidapi/SKILL.md): Cash flight prices and hotel/restaurant discovery via RapidAPI scrapers (Google Flights, Skyscanner, Booking.com, TripAdvisor, Yelp).
+- [Rapidapi](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/rapidapi/SKILL.md): Cash flight prices, hotel/restaurant discovery, Airbnb stays + experiences, routing/geocoding, and destination guides via RapidAPI scrapers.
 - [Seatmaps](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/seatmaps/SKILL.md): Aircraft seat maps, cabin dimensions, seat recommendations.
 - [Seats Aero](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/seats-aero/SKILL.md): Award availability across 27 mileage programs.
 - [Southwest](https://github.com/borski/travel-hacking-toolkit/blob/main/skills/southwest/SKILL.md): SW fare classes, points pricing, Companion Pass. Change flight price drop monitor. Docker: `ghcr.io/borski/sw-fares`.

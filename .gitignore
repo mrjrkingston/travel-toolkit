@@ -12,6 +12,7 @@ trips/
 Screenshot*.png
 seats-aero-chats/
 CLAUDE.local.md
+docs/superpowers/
 
 # Dependencies
 node_modules/
